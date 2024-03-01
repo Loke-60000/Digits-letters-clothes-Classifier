@@ -29,9 +29,3 @@ The convolutional neural network model consists of the following layers:
 6. Flatten layer: Flattens the output of the previous layer.
 7. Dropout layer: Applies dropout with a rate of 0.5.
 8. Dense layer: Fully connected layer with softmax activation, producing the final output.
-
-The model summary can be found below:
-
-```python
-
-```
