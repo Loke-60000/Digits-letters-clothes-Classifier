@@ -54,6 +54,8 @@ function clearDrawing() {
   context.fillRect(0, 0, canvas.width, canvas.height);
 }
 async function sendDrawingForPrediction(predictionUrl) {
+  const canvas = document.getElementById("drawing");
+
   canvas.toBlob(async (blob) => {
     const formData = new FormData();
     formData.append("file", blob, "drawing.png");
@@ -63,16 +65,21 @@ async function sendDrawingForPrediction(predictionUrl) {
         method: "POST",
         body: formData,
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const result = await response.json();
-      alert(JSON.stringify(result));
+
+      alert(`Result: ${JSON.stringify(result, null, 2)}`);
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred while trying to predict.");
     }
-  });
+  }, "image/png");
 }
 
-// Event listener for the Predict button
 document.getElementById("predict-button").addEventListener("click", () => {
   const predictionType = document.getElementById(
     "prediction-type-select"
